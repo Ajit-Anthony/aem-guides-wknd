@@ -12,10 +12,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                echo 'Building WKND..'
                 bat 'java -version'
                 echo "Build Version is ${NEW_VERSION}"
-                //bat "mvn clean package"
+                bat "mvn clean install"
             }
         }
         stage('Scan') {
