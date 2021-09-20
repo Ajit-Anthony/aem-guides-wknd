@@ -47,7 +47,7 @@ pipeline {
                 crxDeploy baseUrls: CRX_DEPLOY_AUTHOR_URL,
                 credentialsId: CRX_DEPLOY_CREDENTIAL_ID,
                 behavior: 'Overwrite',
-                //packageIdFilters: '**/*.zip',
+                packageIdFilters: 'aem-guides-wknd.ui.apps-1.0.1-SNAPSHOT.zip',
                 recursive: true
                 //disableForJobTesting: true
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
