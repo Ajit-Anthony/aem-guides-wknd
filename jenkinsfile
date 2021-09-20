@@ -50,10 +50,7 @@ pipeline {
                     packageIdFilters: '**/*.zip',
                     recursive: true
                     //disableForJobTesting: true
-                    if (currentBuild.result == null || currentBuild.result == 'SUCCESS' ) {
-                       } else {
-                          sh "exit 1" // this fails the stage
-                       }
+                    
                     } 
              }
              catch(err){
