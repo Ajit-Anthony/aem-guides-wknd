@@ -3,7 +3,8 @@ pipeline {
         environment{
             NEW_VERSION = '1.3.0'
             SERVER_CREDENTIALS = credentials('server-cred')
-           // def tomcatWeb = 'E:\\apache-tomcat-9.0.53\\apache-tomcat-9.0.53\\webapps'
+            CRX_DEPLOY_CREDENTIAL_ID = 'aem-author'
+            CRX_DEPLOY_AUTHOR_URL ="http://localhost:4502
            // def tomcatBin = 'E:\\apache-tomcat-9.0.53\\apache-tomcat-9.0.53\\bin'
         }
         tools {
@@ -26,6 +27,7 @@ pipeline {
                bat 'mvn clean install org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
                 echo 'Scanning the code..'
             } 
+            sleep(time:10,unit:"SECONDS")
           }
         }
         stage('Test' ) {
@@ -41,14 +43,12 @@ pipeline {
             } */
             steps {
                 echo "Deploying....${currentBuild.result}"
-                echo "Deployed with credentialss ${SERVER_CREDENTIALS}"
-                echo "some script ${SERVER_CREDENTIALS_USR} ${SERVER_CREDENTIALS_PSW} "
-               // bat "copy web\\target\\time-tracker-web-0.5.0-SNAPSHOT.war \"${tomcatWeb}\\time-tracker-web-0.5.0-SNAPSHOT.war\""
-                
-                 //sleep(time:5,unit:"SECONDS") 
-                 //bat "${tomcatBin}\\shutdown.bat"
-                 //bat "${tomcatBin}\\startup.bat"
-                 sleep(time:10,unit:"SECONDS")
+                 crxDeploy baseUrls: CRX_DEPLOY_AUTHOR_URL,
+                  credentialsId: CRX_DEPLOY_CREDENTIAL_ID,
+                  behavior: 'Overwrite',
+                  packageIdFilters: '**/*.zip',
+                  recursive: true,
+                  disableForJobTesting: true
             } 
            
         }
