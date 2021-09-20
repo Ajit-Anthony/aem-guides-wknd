@@ -50,9 +50,9 @@ pipeline {
                 packageIdFilters: 'ui.apps/target/aem-guides-wknd.ui.apps-*.zip',
                 recursive: false
                 //disableForJobTesting: true
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+               /* catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                    bat "exit 1"
-                    }
+                    } */
              } 
         }
     }
