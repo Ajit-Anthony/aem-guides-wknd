@@ -48,7 +48,7 @@ pipeline {
                 credentialsId: CRX_DEPLOY_CREDENTIAL_ID,
                 behavior: 'Overwrite',
                 packageIdFilters: 'ui.apps/target/aem-guides-wknd.ui.apps-*.zip',
-                recursive: true
+                recursive: false
                 //disableForJobTesting: true
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "exit 1"
