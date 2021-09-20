@@ -43,12 +43,20 @@ pipeline {
             } */
             steps {
                 echo "Deploying....${currentBuild.result}"
-                 crxDeploy baseUrls: CRX_DEPLOY_AUTHOR_URL,
-                  credentialsId: CRX_DEPLOY_CREDENTIAL_ID,
-                  behavior: 'Overwrite',
-                  packageIdFilters: '**/*.zip',
-                  recursive: true
-                  //disableForJobTesting: true
+                try {
+                    crxDeploy baseUrls: CRX_DEPLOY_AUTHOR_URL,
+                    credentialsId: CRX_DEPLOY_CREDENTIAL_ID,
+                     behavior: 'Overwrite',
+                    packageIdFilters: '**/*.zip',
+                    recursive: true
+                    //disableForJobTesting: true
+                }
+                catch(err) {
+                    def message="Failed to deploy................."
+               
+                // Does not make sense to continue
+                throw new Exception(message)
+                }
             } 
            
         }
