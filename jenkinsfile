@@ -47,8 +47,8 @@ pipeline {
                   credentialsId: CRX_DEPLOY_CREDENTIAL_ID,
                   behavior: 'Overwrite',
                   packageIdFilters: '**/*.zip',
-                  recursive: true,
-                  disableForJobTesting: true
+                  recursive: true
+                  //disableForJobTesting: true
             } 
            
         }
