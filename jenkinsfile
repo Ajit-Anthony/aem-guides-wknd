@@ -53,10 +53,7 @@ pipeline {
                    } else {
                       sh "exit 1" // this fails the stage
                    }
-                }
-               
-            } 
-           
+                }     
         }
     }
 }
