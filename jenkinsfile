@@ -41,22 +41,19 @@ pipeline {
                 currentBuild.result == null || currentBuild.result == 'SUCCESS' 
               }
             } */
-            try{
-                steps {
-                    echo "Deploying....${currentBuild.result}"
-                    crxDeploy baseUrls: CRX_DEPLOY_AUTHOR_URL,
-                    credentialsId: CRX_DEPLOY_CREDENTIAL_ID,
-                    behavior: 'Overwrite',
-                    packageIdFilters: '**/*.zip',
-                    recursive: true
-                    //disableForJobTesting: true
-                    
-                    } 
-             }
-             catch(err){
-                currentBuild.result = 'FAILURE'
-                return
-             }
+           
+            steps {
+                echo "Deploying....${currentBuild.result}"
+                crxDeploy baseUrls: CRX_DEPLOY_AUTHOR_URL,
+                credentialsId: CRX_DEPLOY_CREDENTIAL_ID,
+                behavior: 'Overwrite',
+                packageIdFilters: '**/*.zip',
+                recursive: true
+                //disableForJobTesting: true
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh "exit 1"
+                    }
+             } 
         }
     }
 }
